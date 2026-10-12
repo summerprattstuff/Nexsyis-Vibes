@@ -1,0 +1,236 @@
+/* 2. Drafting Table — blueprint / planning, light mode */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --navy: #25305a;
+  --blue-mid: #6779c0;
+  --periwinkle: #94a1d3;
+  --lavender: #c2c9e6;
+  --teal: #3fb8af;
+  --orange: #e8743b;
+  --gold: #e0a526;
+
+  --ink: #25305a;
+  --brand-ink: #25305a;
+  --muted: #5f6a88;
+  --faint: #94a1d3;
+  --bg: #f7f8fc;
+  --paper: #ffffff;
+  --sheet: #f7f8fc;
+  --soft: #eef0f8;
+  --line: #94a1d3;
+  --ph: #dfe3f2;
+
+  --spine: #ffffff;
+  --spinefg: #25305a;
+  --spine-muted: #6779c0;
+  --spine-width: 220px;
+  --spine-gap: 2px;
+
+  --tile: 22px;
+  --tile-bg: transparent;
+  --tile-line: transparent;
+  --tile-fg: #25305a;
+  --tile-active-bg: transparent;
+  --tile-active-line: transparent;
+  --tile-active-fg: #25305a;
+  --tile-active-glow: none;
+
+  --action: #25305a;
+  --action-fg: #ffffff;
+  --tab-active: #25305a;
+  --link: #25305a;
+  --band: #ffffff;
+  --band-fg: #25305a;
+
+  --panel-bg: #ffffff;
+  --panel-line: #6779c0;
+  --panel-shadow: none;
+  --radius-panel: 0;
+  --radius-control: 0;
+  --radius-tile: 0;
+  --radius-chip: 0;
+
+  --thead: #f0f2fa;
+  --thead-line: #25305a;
+  --group-bg: color-mix(in srgb, #c2c9e6 40%, #fff);
+  --row-line: #c2c9e6;
+  --row-selected: color-mix(in srgb, #c2c9e6 55%, #fff);
+  --row-h: 36px;
+
+  --chip-on-bg: #25305a;
+  --chip-on-line: #25305a;
+  --chip-on-fg: #fff;
+
+  --font: "IBM Plex Sans", sans-serif;
+  --font-display: "IBM Plex Sans", sans-serif;
+  --text-brand: 10px;
+  --text-title: 26px;
+  --text-body: 13px;
+  --text-row: 12.5px;
+  --track-brand: 0.14em;
+  --track-title: 0;
+  --kpi-num: 18px;
+  --kpi-gap: 0;
+  --kpi-pad: 10px 14px;
+  --content-pad: 28px 36px 40px;
+  --content-bg:
+    radial-gradient(circle, color-mix(in srgb, #c2c9e6 45%, transparent) 0.9px, transparent 1px) 0 0 / 28px 28px,
+    #f7f8fc;
+  --dialog-shadow: none;
+}
+
+/* Wide rail — icon + label side by side */
+.spine {
+  padding: 12px 12px 14px;
+}
+
+.brand {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--navy);
+}
+
+.brand img {
+  width: 22px;
+  height: 22px;
+}
+
+.brand-word {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-align: left;
+}
+
+.spine-nav {
+  padding: 4px 0;
+}
+
+.spine-item {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  text-align: left;
+  border: 1px solid transparent;
+  color: var(--navy);
+}
+
+.spine-item .tile {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  background: transparent;
+  color: inherit;
+}
+
+.spine-item .tile .ico {
+  width: 18px;
+  height: 18px;
+}
+
+.spine-item .lbl {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.spine-item.is-active {
+  background: color-mix(in srgb, var(--lavender) 45%, #fff);
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.spine-item.is-active .lbl {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.spine-item.is-active .tile {
+  outline: none;
+  color: var(--navy);
+}
+
+.spine-foot {
+  align-items: flex-start;
+  padding: 12px 10px 4px;
+  border-top: 1px solid var(--blue-mid);
+}
+
+.kpis {
+  border: 1px solid var(--blue-mid);
+  background: #fff;
+}
+
+.kpi {
+  background: #fff;
+  border: 0;
+  border-right: 1px solid var(--lavender);
+  border-radius: 0;
+  min-width: 100px;
+}
+
+.kpi:last-child { border-right: 0; }
+
+.sel-bar {
+  border: 1px solid var(--navy);
+  background: #fff;
+  color: var(--navy);
+}
+
+.sel-bar .btn {
+  background: #fff;
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.tag-neutral {
+  /* Gold stamp reserved for attention/approval marks in this vibe later */
+  color: var(--navy);
+  background: color-mix(in srgb, var(--lavender) 55%, #fff);
+  border: 1px solid var(--blue-mid);
+}
+
+.tag-attention {
+  color: #25305a;
+  background: color-mix(in srgb, var(--gold) 35%, #fff);
+  border: 1px solid var(--gold);
+}
+
+/* Stage tables — drafting sheet blocks */
+.stage-stack {
+  gap: 20px;
+}
+
+.stage-panel {
+  border: 1px solid var(--blue-mid);
+  background: #fff;
+}
+
+.stage-panel .ledger tr.group td {
+  background: color-mix(in srgb, var(--lavender) 40%, #fff);
+  border-bottom: 1px solid var(--navy);
+}
+
+.stage-process .tick { background: var(--blue-mid); }
+.stage-awaiting .tick { background: var(--orange); }
+.stage-ready .tick { background: var(--teal); }
+
+.toast {
+  border: 1px solid #fff;
+  border-radius: 0;
+}
+
+.dialog {
+  border: 1px solid var(--navy);
+  border-radius: 0;
+}

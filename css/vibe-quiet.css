@@ -1,0 +1,439 @@
+/* 3. Minimalist — calm, spacious, minimal light UI */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --navy: #25305a;
+  --blue-mid: #6779c0;
+  --periwinkle: #94a1d3;
+  --lavender: #c2c9e6;
+  --teal: #3fb8af;
+  --orange: #e8743b;
+  --gold: #e0a526;
+
+  --ink: #25305a;
+  --brand-ink: #25305a;
+  --muted: #7a8298;
+  --faint: #b0b6c8;
+  --bg: #fafbfd;
+  --paper: #ffffff;
+  --sheet: #fafbfd;
+  --soft: #f4f5f9;
+  --line: #dfe3f0;
+  --line-soft: #e8ebf4;
+  --ph: #e8eaf2;
+
+  --spine: #ffffff;
+  --spinefg: #25305a;
+  --spine-muted: #94a1d3;
+  --spine-width: 72px;
+  --spine-width-open: 220px;
+  --spine-gap: 6px;
+
+  --tile: 22px;
+  --tile-bg: transparent;
+  --tile-line: transparent;
+  --tile-fg: #6779c0;
+  --tile-active-bg: transparent;
+  --tile-active-line: transparent;
+  --tile-active-fg: #25305a;
+  --tile-active-glow: none;
+
+  --action: #25305a;
+  --action-fg: #ffffff;
+  --tab-active: #25305a;
+  --link: #25305a;
+  --band: #f7f8fc;
+  --band-fg: #25305a;
+
+  --panel-bg: #ffffff;
+  --panel-line: transparent;
+  --panel-shadow: 0 10px 30px -22px rgba(37, 48, 90, 0.28);
+  --radius-panel: 16px;
+  --radius-control: 999px;
+  --radius-tile: 0;
+  --radius-chip: 999px;
+
+  --thead: #fbfcfe;
+  --thead-line: #c2c9e6;
+  --group-bg: transparent;
+  --row-line: #e8ebf4;
+  --row-selected: #f4f6fb;
+  --row-h: 48px;
+
+  --chip-on-bg: #25305a;
+  --chip-on-line: #25305a;
+  --chip-on-fg: #fff;
+
+  --font: "Manrope", sans-serif;
+  --font-display: "Manrope", sans-serif;
+  --text-brand: 13px;
+  --text-title: 34px;
+  --text-body: 14px;
+  --text-row: 14px;
+  --track-brand: 0;
+  --track-title: -0.03em;
+  --kpi-num: 28px;
+  --kpi-gap: 24px;
+  --kpi-pad: 0;
+  --section-gap: 28px;
+  --content-pad: 32px 36px 48px;
+  --content-bg: #fafbfd;
+  --dialog-shadow: 0 24px 48px -28px rgba(37, 48, 90, 0.3);
+  --panel-line: #c2c9e6;
+}
+
+/* Icon rail — expands on hover to reveal labels */
+.spine {
+  width: var(--spine-width);
+  border-right: 1px solid var(--lavender);
+  padding: 12px 0 14px;
+  background: #fff;
+  overflow: hidden;
+  z-index: 30;
+  transition: width 0.2s ease;
+}
+
+.spine:hover {
+  width: var(--spine-width-open);
+  box-shadow: 12px 0 32px -20px rgba(37, 48, 90, 0.28);
+}
+
+.brand {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  /* Keep mark centered in the 72px rail; labels grow to the right on hover */
+  padding: 10px 0 16px 24px;
+  margin: 0;
+  border-bottom: 1px solid var(--line-soft);
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  gap: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.spine:hover .brand {
+  gap: 12px;
+  padding-right: 16px;
+}
+
+.brand img {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  display: block;
+}
+
+.brand-word {
+  opacity: 0;
+  width: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-align: left;
+  transition: opacity 0.15s ease;
+}
+
+.spine:hover .brand-word {
+  opacity: 1;
+  width: auto;
+  max-width: 160px;
+}
+
+.spine-nav {
+  padding: 4px 10px;
+  gap: var(--spine-gap);
+  align-items: stretch;
+}
+
+.spine-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 0 0 15px; /* 10px nav pad + 15px ≈ icon centered in 72px rail */
+  border-radius: 12px;
+  text-align: left;
+  color: var(--navy);
+  box-sizing: border-box;
+}
+
+.spine:hover .spine-item {
+  gap: 12px;
+  padding: 0 14px 0 15px;
+}
+
+.spine-item .tile {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--blue-mid);
+  box-shadow: none;
+  border: 0;
+}
+
+.spine-item .tile .ico {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.spine-item .lbl {
+  opacity: 0;
+  width: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1;
+  transition: opacity 0.15s ease;
+}
+
+.spine:hover .spine-item .lbl {
+  opacity: 1;
+  width: auto;
+  max-width: 160px;
+}
+
+.spine-item.is-active {
+  background: color-mix(in srgb, var(--lavender) 28%, #fff);
+}
+
+.spine-item.is-active .tile {
+  color: var(--navy);
+  background: transparent;
+}
+
+.spine-item.is-active .lbl {
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.spine-foot {
+  border-top: 1px solid var(--line-soft);
+  margin: 0;
+  padding: 12px 0 4px 20px;
+  align-items: flex-start;
+}
+
+.spine-foot .user-chip {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  flex: 0 0 32px;
+}
+
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--lavender);
+  box-shadow: none;
+}
+
+.tabstrip {
+  background: #fff;
+  border-bottom: 1px solid var(--line-soft);
+  box-shadow: none;
+}
+
+.tab.is-active {
+  background: transparent;
+  border-bottom-width: 2px;
+}
+
+.workspace {
+  background: var(--sheet);
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(112px, 128px));
+  gap: 12px;
+  align-items: stretch;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 88px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--lavender);
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.kpi .k {
+  margin-bottom: 8px;
+}
+
+.kpi .v {
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* One focal accent: teal progress under first KPI */
+.kpi:first-child::after {
+  content: "";
+  display: block;
+  margin-top: 12px;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--teal) 70%, var(--lavender) 70%);
+}
+
+.kpi.is-alert {
+  border-color: color-mix(in srgb, var(--orange) 35%, var(--lavender));
+}
+
+.sel-bar {
+  background: #fff;
+  border: 1px solid var(--lavender);
+  box-shadow: none;
+  color: var(--navy);
+  min-height: 48px;
+  padding: 0 18px;
+}
+
+.sel-bar .btn {
+  background: var(--soft);
+  border-color: transparent;
+  color: var(--navy);
+}
+
+.sel-bar .btn:first-of-type {
+  background: var(--navy);
+  color: #fff;
+}
+
+.stage-stack {
+  gap: 28px;
+}
+
+.stage-panel {
+  border: 1px solid var(--lavender);
+  background: #fff;
+  box-shadow: none;
+  border-radius: var(--radius-panel);
+  padding: 0;
+  overflow: hidden;
+}
+
+.panel {
+  border: 1px solid var(--lavender);
+  padding: 0;
+}
+
+.ledger {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ledger th {
+  border-bottom: 0;
+  background: var(--navy);
+  color: #fff;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.ledger .group td {
+  padding-top: 12px;
+  padding-bottom: 10px;
+  letter-spacing: 0.16em;
+  color: var(--navy);
+  font-weight: 700;
+  border-bottom: 1px solid var(--lavender);
+  background: color-mix(in srgb, var(--lavender) 22%, #fff);
+}
+
+/* Process blue — cooler/sky, distinct from lavender selected-row wash */
+.stage-process .group td {
+  background: color-mix(in srgb, #3d8bfd 12%, #fff);
+  color: #1e4f8c;
+}
+
+.stage-awaiting .group td {
+  background: color-mix(in srgb, var(--orange) 10%, #fff);
+}
+
+.stage-ready .group td {
+  background: color-mix(in srgb, var(--teal) 12%, #fff);
+}
+
+.ledger tr.data td {
+  border-bottom: 1px solid var(--line-soft);
+  background: #fff;
+}
+
+/* Simple zebra — easier to scan rows without heavy chrome */
+.ledger tr.data:nth-child(even) td {
+  background: #f7f8fc;
+}
+
+.ledger tr.data.is-selected td {
+  background: color-mix(in srgb, var(--lavender) 28%, #fff);
+}
+
+.ledger tr.data:last-child td {
+  border-bottom: 0;
+}
+
+.ledger .tick {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.stage-process .tick { background: #3d8bfd; }
+.stage-awaiting .tick { background: var(--orange); }
+.stage-ready .tick { background: var(--teal); }
+
+.toolbar {
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+  border-bottom: 0;
+}
+
+.tag-critical,
+.tag-attention,
+.tag-neutral { border-radius: 999px; }
+
+.tag-attention {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, #fff);
+}
+
+.tag-neutral {
+  background: transparent;
+  color: var(--teal);
+  border: 1px solid color-mix(in srgb, var(--teal) 45%, #fff);
+}
+
+.toast {
+  border-radius: 14px;
+  background: var(--navy);
+}
+
+.dialog {
+  border: 0;
+}

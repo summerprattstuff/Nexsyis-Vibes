@@ -1,0 +1,547 @@
+/* 1. Command Center — light tech dashboard / infotainment
+
+   Signal legend (strict):
+   · Teal         → interactive / active only
+   · Orange       → critical now
+   · Soft orange  → attention soon (same hue, lower intensity; dark type)
+   · Green        → workflow stages (In process / Awaiting / Ready + stage tags)
+
+   Chrome rule: no borders, except checkboxes + table rules. Depth = inset shadows.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --navy: #25305a;
+  --blue-mid: #6779c0;
+  --periwinkle: #94a1d3;
+  --lavender: #c2c9e6;
+  --teal: #3fb8af;
+  --stage: #2f9f6f;
+  --orange: #e8743b;
+  --gold: color-mix(in srgb, #e8743b 42%, #ffffff);
+
+  --ink: #25305a;
+  --brand-ink: #25305a;
+  --muted: #6b7286;
+  --faint: #9aa3b5;
+  --bg: #e8edf5;
+  --paper: #ffffff;
+  --sheet: #f0f3f9;
+  --soft: #e4eaf3;
+  --line: transparent;
+  --ph: #dde3f0;
+
+  --spine: #ffffff;
+  --spinefg: #25305a;
+  --spine-muted: #6b7286;
+  --spine-width: 232px;
+  --spine-gap: 4px;
+
+  --tile: 36px;
+  --tile-bg: transparent;
+  --tile-line: transparent;
+  --tile-fg: #25305a;
+  --tile-active-bg: transparent;
+  --tile-active-line: transparent;
+  --tile-active-fg: #2f9f6f;
+  --tile-active-glow: none;
+
+  --action: #3fb8af;
+  --action-fg: #ffffff;
+  --tab-active: #3fb8af;
+  --link: #3fb8af;
+  --band: #25305a;
+  --band-fg: #ffffff;
+
+  --panel-bg: linear-gradient(160deg, #25305a 0%, #6779c0 100%);
+  --panel-line: transparent;
+  --panel-shadow: inset 0 0 18px rgba(15, 20, 40, 0.22);
+  --radius-panel: 14px;
+  --radius-control: 10px;
+  --radius-tile: 12px;
+  --radius-chip: 999px;
+
+  --thead: color-mix(in srgb, #25305a 8%, #fff);
+  --thead-line: transparent;
+  --group-bg: color-mix(in srgb, #c2c9e6 35%, #fff);
+  --row-line: transparent;
+  --row-selected: color-mix(in srgb, #3fb8af 12%, #fff);
+  --row-h: 40px;
+
+  --chip-on-bg: #3fb8af;
+  --chip-on-line: transparent;
+  --chip-on-fg: #fff;
+
+  --gauge-track: color-mix(in srgb, #fff 28%, transparent);
+
+  --font: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --text-brand: 11px;
+  --text-title: 28px;
+  --text-body: 13px;
+  --text-row: 13px;
+  --track-brand: 0.04em;
+  --track-title: -0.03em;
+  --kpi-num: 22px;
+  --content-pad: 18px 20px 36px;
+  --content-bg: #f0f3f9;
+
+  /* Centered insets only — no x/y offset on the shadow */
+  --inset: inset 0 0 6px rgba(37, 48, 90, 0.12);
+  --inset-deep: inset 0 0 10px rgba(37, 48, 90, 0.16);
+  --inset-on-dark: inset 0 0 18px rgba(15, 20, 40, 0.32);
+  --inset-fill: inset 0 0 8px rgba(15, 20, 40, 0.18);
+  --inset-teal: inset 0 0 10px rgba(47, 120, 110, 0.22);
+}
+
+/* —— No borders on chrome (table + checkboxes excluded below) */
+.spine,
+.brand,
+.spine-foot,
+.topbar,
+.tabstrip,
+.search,
+.btn,
+.icon-btn,
+.kpi,
+.launch-tile,
+.launch-tile .tile,
+.panel,
+.sel-bar,
+.chip,
+.user-chip,
+.spine-item .tile,
+.toast,
+.vibe-tag,
+.dialog,
+.tag {
+  border: 0 !important;
+}
+
+/* —— Sidebar: wide rail, icon + label in a row */
+.spine {
+  padding: 12px 14px 16px;
+  box-shadow: none;
+  background: #fff;
+}
+
+.brand {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: none;
+}
+
+.brand img {
+  width: 22px;
+  height: 22px;
+}
+
+.brand-word {
+  font-size: 14px;
+  letter-spacing: 0;
+  text-align: left;
+  font-weight: 700;
+}
+
+.spine-nav {
+  padding: 4px 0;
+  gap: 2px;
+}
+
+.spine-kicker {
+  margin: 14px 12px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.spine-kicker:first-child {
+  margin-top: 4px;
+}
+
+.spine-item {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 999px;
+  color: var(--navy);
+  text-align: left;
+}
+
+.spine-item .tile {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+}
+
+.spine-item .tile .ico {
+  width: 18px;
+  height: 18px;
+}
+
+.spine-item .lbl {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.spine-item.is-active {
+  background: color-mix(in srgb, var(--teal) 16%, #ffffff);
+  color: #2a7a72;
+  box-shadow: inset 0 0 10px rgba(63, 184, 175, 0.14);
+}
+
+.spine-item.is-active .tile {
+  background: transparent;
+  color: #2a7a72;
+  box-shadow: none;
+}
+
+.spine-item.is-active .lbl {
+  color: #2a7a72;
+}
+
+.spine-foot {
+  align-items: stretch;
+  padding: 12px 4px 4px;
+  box-shadow: none;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: var(--sheet);
+  box-shadow: none;
+}
+
+.user-chip {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  box-shadow: none;
+  background: var(--lavender);
+  color: var(--navy);
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.user-meta strong {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-meta span {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.topbar {
+  box-shadow: none;
+}
+
+.tabstrip {
+  box-shadow: none;
+}
+
+.tab {
+  border-bottom: 0 !important;
+  box-shadow: none;
+  border-radius: 10px 10px 0 0;
+}
+
+.tab.is-active {
+  background: color-mix(in srgb, var(--teal) 12%, #ffffff);
+  color: #2a7a72;
+  box-shadow: inset 0 0 10px rgba(63, 184, 175, 0.12);
+}
+
+.tab.is-dirty {
+  background: color-mix(in srgb, var(--orange) 14%, #ffffff);
+  box-shadow: inset 0 0 10px rgba(180, 70, 30, 0.16);
+}
+
+.search {
+  background: var(--soft);
+  box-shadow: none;
+}
+
+.btn {
+  box-shadow: var(--inset-fill);
+}
+
+.btn-primary,
+.btn-teal {
+  box-shadow: var(--inset-fill);
+}
+
+.btn-ghost {
+  color: var(--muted);
+  background: var(--soft);
+  box-shadow: var(--inset);
+}
+
+.icon-btn {
+  background: var(--soft);
+  box-shadow: var(--inset);
+}
+
+.kpi,
+.launch-tile {
+  background: linear-gradient(160deg, #25305a 0%, #6779c0 100%);
+  color: #fff;
+  box-shadow: var(--inset-on-dark);
+}
+
+.kpi .k,
+.launch-tile .sub { color: color-mix(in srgb, #fff 70%, transparent); }
+.kpi .v { color: #fff; }
+
+/* Late KPI — distinct critical surface */
+.kpi.is-alert {
+  background: linear-gradient(160deg, #c45a28 0%, #e8743b 100%);
+  box-shadow: inset 0 0 18px rgba(90, 30, 10, 0.28);
+}
+
+.kpi.is-alert .k { color: rgba(255, 255, 255, 0.8); }
+.kpi.is-alert .v { color: #fff; }
+.kpi.is-alert .kpi-gauge .track {
+  stroke: rgba(255, 255, 255, 0.28);
+}
+.kpi.is-alert .kpi-gauge .arc {
+  stroke: #fff;
+}
+
+.launch-tile {
+  padding: 16px 14px 14px;
+  gap: 14px;
+  min-height: 112px;
+}
+
+.launch-tile .tile {
+  width: 48px;
+  height: 48px;
+  background: color-mix(in srgb, #fff 16%, transparent);
+  box-shadow: inset 0 0 10px rgba(15, 20, 40, 0.28);
+}
+
+.launch-tile .tile .ico {
+  width: 16px;
+  height: 16px;
+}
+
+.launch-tile .name { color: #fff; }
+
+.sel-bar {
+  background: linear-gradient(90deg, #25305a, #6779c0);
+  box-shadow: var(--inset-on-dark);
+}
+
+.sel-bar .btn {
+  background: color-mix(in srgb, #fff 16%, transparent);
+  color: #fff;
+  box-shadow: inset 0 0 8px rgba(15, 20, 40, 0.22);
+}
+
+.chip {
+  background: var(--soft);
+  box-shadow: none;
+}
+
+.chip.is-on {
+  background: var(--teal);
+  color: #fff;
+  box-shadow: var(--inset-fill);
+}
+
+.panel {
+  background: var(--content-bg);
+  background-image: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.stage-stack {
+  gap: 16px;
+}
+
+.stage-panel {
+  background: #fff;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Table + checkboxes may use borders */
+.ledger th {
+  border-bottom: 1px solid color-mix(in srgb, var(--navy) 22%, #fff) !important;
+  box-shadow: none;
+}
+
+.ledger .group td {
+  border-bottom: 1px solid color-mix(in srgb, var(--navy) 12%, #fff) !important;
+  box-shadow: none;
+}
+
+.ledger tr.data td {
+  border-bottom: 1px solid color-mix(in srgb, var(--navy) 10%, #fff) !important;
+  box-shadow: none;
+}
+
+.ledger tr.is-selected td {
+  box-shadow: none;
+}
+
+.ledger .check {
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--navy) 28%, #fff) !important;
+  box-shadow: none;
+}
+
+.ledger tr.is-selected .check {
+  background: var(--teal);
+  border-color: var(--teal) !important;
+  box-shadow: var(--inset-fill);
+}
+
+/* Status pills — solid fills + inset; no outline treatment */
+.tag {
+  border: 0 !important;
+  border-radius: 999px;
+  box-shadow: var(--inset-fill);
+}
+
+.tag-neutral {
+  color: #fff;
+  background: var(--stage);
+}
+
+.tag-attention {
+  color: #7a2f0c;
+  background: color-mix(in srgb, var(--orange) 28%, #ffffff);
+  box-shadow: inset 0 0 6px rgba(122, 47, 12, 0.14);
+}
+
+.tag-critical {
+  color: #fff;
+  background: var(--orange);
+}
+
+/* Stage group bars — distinct status colors + spacing */
+.ledger tr.group-gap td {
+  height: 16px;
+  padding: 0 !important;
+  border: 0 !important;
+  background: var(--content-bg) !important;
+  box-shadow: none !important;
+}
+
+/* separate = border-radius works on every stage block, not just edges */
+.ledger {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ledger thead th {
+  background: #fff;
+}
+
+.ledger thead th:first-child {
+  border-radius: 12px 0 0 0;
+}
+
+.ledger thead th:last-child {
+  border-radius: 0 12px 0 0;
+}
+
+.ledger tr.data td {
+  background: #fff;
+}
+
+.ledger tr.group td {
+  border-bottom: 0 !important;
+  font-weight: 700;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Bottom corners on the last row of every stage block */
+.ledger tr.group-end td:first-child {
+  border-radius: 0 0 0 12px;
+}
+
+.ledger tr.group-end td:last-child {
+  border-radius: 0 0 12px 0;
+}
+
+.ledger tr.group-end td:only-child,
+.ledger tr.group-end td[colspan] {
+  border-radius: 0 0 12px 12px;
+}
+
+.ledger tr.group-process td {
+  background: color-mix(in srgb, var(--blue-mid) 22%, #fff);
+  color: var(--navy);
+}
+
+.ledger tr.group-process .tick {
+  background: var(--blue-mid);
+  box-shadow: inset 0 0 3px rgba(15, 20, 40, 0.18);
+}
+
+.ledger tr.group-awaiting td {
+  background: color-mix(in srgb, var(--orange) 22%, #fff);
+  color: #7a2f0c;
+}
+
+.ledger tr.group-awaiting .tick {
+  background: var(--orange);
+  box-shadow: inset 0 0 3px rgba(90, 30, 10, 0.2);
+}
+
+.ledger tr.group-ready td {
+  background: color-mix(in srgb, var(--stage) 22%, #fff);
+  color: #1a5c40;
+}
+
+.ledger tr.group-ready .tick {
+  background: var(--stage);
+  box-shadow: inset 0 0 3px rgba(15, 20, 40, 0.18);
+}
+
+.toast {
+  box-shadow: var(--inset-on-dark);
+}
+
+.vibe-tag {
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  box-shadow: none;
+}
