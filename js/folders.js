@@ -20,7 +20,197 @@ const ICO = {
   columns: `<svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="16" rx="1"/><rect x="14" y="4" width="6" height="16" rx="1"/></svg>`,
   layers: `<svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></svg>`,
   check: `<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>`,
+  sidebar: `<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>`,
+  chevron: `<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>`,
 };
+
+/** Top sections → L1 destinations → optional L2 kids (from Chalk nav concept). */
+const SPINE_NAV = [
+  { type: "kicker", label: "Workspace" },
+  {
+    id: "office",
+    label: "Office",
+    icon: "office",
+    expanded: true,
+    active: true,
+    children: [
+      { label: "Folders", count: "24", active: true },
+      { label: "Scheduling" },
+      { label: "Loaner Fleet", count: "6" },
+      {
+        label: "Contacts",
+        count: "8",
+        children: [
+          { label: "Customers" },
+          { label: "Insurance Companies" },
+          { label: "Agents" },
+          { label: "Adjusters" },
+          { label: "Vendor Contacts" },
+          { label: "Rental Companies" },
+          { label: "Fleets" },
+          { label: "Tow Companies" },
+        ],
+      },
+      { label: "Record Deposit / CC Batch" },
+    ],
+  },
+  {
+    id: "production",
+    label: "Production",
+    icon: "prod",
+    children: [
+      { label: "Floor", count: "11" },
+      { label: "Quality Control", count: "4" },
+      { label: "Rework / Returns", count: "1" },
+      { label: "Labor" },
+    ],
+  },
+  {
+    id: "purchasing",
+    label: "Purchasing",
+    icon: "buy",
+    children: [
+      { label: "Purchase Orders", count: "18" },
+      { label: "Purchase Assistant" },
+      { label: "Third Party Purchasing" },
+      { label: "Vendor Sourcing" },
+      { label: "A/P Invoices", count: "7" },
+    ],
+  },
+  { type: "kicker", label: "Back office" },
+  {
+    id: "accounting",
+    label: "Accounting",
+    icon: "acct",
+    children: [
+      {
+        label: "Accounts Payable",
+        count: "12",
+        children: [
+          { label: "A/P Invoices", count: "7" },
+          { label: "A/P Payments" },
+          { label: "A/P Imports" },
+          { label: "Reconcile Statements", count: "3" },
+          { label: "Vendors" },
+        ],
+      },
+      {
+        label: "Accounts Receivable",
+        count: "11",
+        children: [
+          { label: "A/R Payments" },
+          { label: "Adjustments" },
+          { label: "Refunds" },
+          { label: "Return Checks", count: "1" },
+          { label: "Sales Tax" },
+          { label: "Deposits" },
+        ],
+      },
+      {
+        label: "Banking",
+        count: "8",
+        children: [
+          { label: "Transactions" },
+          { label: "Bank Reconciliation", count: "2" },
+          { label: "Positive Pay" },
+          { label: "Credit Cards" },
+        ],
+      },
+      {
+        label: "General Ledger",
+        count: "8",
+        children: [
+          { label: "Journal Entries" },
+          { label: "GL Detail Inquiry" },
+          { label: "GL Report Map" },
+          { label: "GL Import" },
+        ],
+      },
+      {
+        label: "Payroll & Time",
+        count: "12",
+        open: true,
+        children: [
+          { label: "Employees" },
+          { label: "Approve Time", count: "6" },
+          { label: "Absences" },
+          { label: "Pay Rates" },
+          { label: "1099 Processing" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "insight",
+    label: "Insight",
+    icon: "insight",
+    children: [
+      { label: "Reports by Folder", count: "4" },
+      { label: "All Reports", count: "17" },
+      { label: "My Favorites" },
+      { label: "Subscriptions" },
+    ],
+  },
+];
+
+function countHtml(count) {
+  if (count == null || count === "") return "";
+  return `<span class="spine-count">${count}</span>`;
+}
+
+function renderSpineLeaf(item) {
+  return `
+    <button class="spine-leaf${item.active ? " is-active" : ""}" type="button">
+      <span class="spine-leaf-lbl">${item.label}</span>
+      ${countHtml(item.count)}
+    </button>`;
+}
+
+function renderSpineL1(item) {
+  const hasKids = Array.isArray(item.children) && item.children.length > 0;
+  const open = hasKids && item.open;
+  return `
+    <div class="spine-branch${open ? " is-open" : ""}${item.active ? " is-active" : ""}">
+      <button class="spine-link${item.active ? " is-active" : ""}${hasKids ? " has-kids" : ""}" type="button"${hasKids ? ` aria-expanded="${open ? "true" : "false"}"` : ""}>
+        <span class="spine-mark" aria-hidden="true">${hasKids ? `<span class="ico spine-chevron">${ICO.chevron}</span>` : "—"}</span>
+        <span class="spine-link-lbl">${item.label}</span>
+        ${countHtml(item.count)}
+      </button>
+      ${hasKids ? `<div class="spine-leaves">${item.children.map(renderSpineLeaf).join("")}</div>` : ""}
+    </div>`;
+}
+
+function renderSpineNav(vibe) {
+  if (vibe !== "command") {
+    return SPINE_NAV.filter((n) => n.type !== "kicker")
+      .map(
+        (sec) => `
+      <button class="spine-item${sec.active ? " is-active" : ""}" type="button">
+        <span class="tile"><span class="ico">${ICO[sec.icon]}</span></span>
+        <span class="lbl">${sec.label}</span>
+      </button>`
+      )
+      .join("");
+  }
+
+  return SPINE_NAV.map((node) => {
+    if (node.type === "kicker") {
+      return `<div class="spine-kicker">${node.label}</div>`;
+    }
+    const tree = node.children?.length
+      ? `<div class="spine-tree">${node.children.map(renderSpineL1).join("")}</div>`
+      : "";
+    return `
+      <div class="spine-section${node.expanded ? " is-expanded" : ""}${node.active ? " is-current" : ""}" data-section="${node.id}">
+        <button class="spine-item${node.active ? " is-active" : ""}" type="button" data-spine-section aria-expanded="${node.expanded ? "true" : "false"}">
+          <span class="tile"><span class="ico">${ICO[node.icon]}</span></span>
+          <span class="lbl">${node.label}</span>
+          <span class="ico spine-section-chevron" aria-hidden="true">${ICO.chevron}</span>
+        </button>
+        ${tree}
+      </div>`;
+  }).join("");
+}
 
 const LABELS = {
   command: "Command Center",
@@ -128,34 +318,18 @@ function mountFolders(vibe) {
 
   root.innerHTML = `
   <div class="app">
-    <aside class="spine" aria-label="Sections">
-      <a class="brand" href="index.html" title="Nexsyis">
-        <img src="assets/nexsyis-mark.ico" alt="" />
-        <span class="brand-word">Nexsyis</span>
-      </a>
+    <aside class="spine is-open" aria-label="Sections">
+      <div class="spine-head">
+        <a class="brand" href="index.html" title="Nexsyis">
+          <img src="assets/nexsyis-mark.ico" alt="" />
+          <span class="brand-word">Nexsyis</span>
+        </a>
+        <button class="spine-toggle" type="button" aria-expanded="true" aria-label="Collapse navigation" title="Collapse navigation">
+          <span class="ico">${ICO.sidebar}</span>
+        </button>
+      </div>
       <nav class="spine-nav">
-        ${vibe === "command" ? `<div class="spine-kicker">Workspace</div>` : ""}
-        <button class="spine-item is-active" type="button">
-          <span class="tile"><span class="ico">${ICO.office}</span></span>
-          <span class="lbl">Office</span>
-        </button>
-        <button class="spine-item" type="button">
-          <span class="tile"><span class="ico">${ICO.prod}</span></span>
-          <span class="lbl">Production</span>
-        </button>
-        <button class="spine-item" type="button">
-          <span class="tile"><span class="ico">${ICO.buy}</span></span>
-          <span class="lbl">Purchasing</span>
-        </button>
-        ${vibe === "command" ? `<div class="spine-kicker">Back office</div>` : ""}
-        <button class="spine-item" type="button">
-          <span class="tile"><span class="ico">${ICO.acct}</span></span>
-          <span class="lbl">Accounting</span>
-        </button>
-        <button class="spine-item" type="button">
-          <span class="tile"><span class="ico">${ICO.insight}</span></span>
-          <span class="lbl">Insight</span>
-        </button>
+        ${renderSpineNav(vibe)}
       </nav>
       <div class="spine-foot">
         ${vibe === "command" ? `
@@ -444,7 +618,78 @@ function mountFolders(vibe) {
   document.title = `Nexsyis · ${label} · Folders`;
   wireTopbarSearch();
   wireAllOpenToggle();
+  wireSpineToggle();
+  wireSpineNav();
   wirePopovers();
+}
+
+function wireSpineToggle() {
+  const spine = document.querySelector(".spine");
+  const btn = document.querySelector(".spine-toggle");
+  if (!spine || !btn) return;
+
+  btn.addEventListener("click", () => {
+    const open = spine.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.setAttribute("aria-label", open ? "Collapse navigation" : "Expand navigation");
+    btn.title = open ? "Collapse navigation" : "Expand navigation";
+  });
+}
+
+function wireSpineNav() {
+  const nav = document.querySelector(".spine-nav");
+  if (!nav) return;
+
+  const clearLeafActive = () => {
+    nav.querySelectorAll(".spine-link.is-active, .spine-leaf.is-active, .spine-branch.is-active").forEach((el) => {
+      el.classList.remove("is-active");
+    });
+  };
+
+  nav.addEventListener("click", (e) => {
+    const sectionBtn = e.target.closest("[data-spine-section]");
+    if (sectionBtn) {
+      const section = sectionBtn.closest(".spine-section");
+      if (!section) return;
+      const willOpen = !section.classList.contains("is-expanded");
+      nav.querySelectorAll(".spine-section.is-expanded").forEach((s) => {
+        if (s !== section) {
+          s.classList.remove("is-expanded");
+          s.querySelector("[data-spine-section]")?.setAttribute("aria-expanded", "false");
+        }
+      });
+      section.classList.toggle("is-expanded", willOpen);
+      sectionBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      nav.querySelectorAll(".spine-section.is-current, .spine-item.is-active").forEach((el) => {
+        el.classList.remove("is-current", "is-active");
+      });
+      section.classList.add("is-current");
+      sectionBtn.classList.add("is-active");
+      return;
+    }
+
+    const link = e.target.closest(".spine-link");
+    if (link) {
+      const branch = link.closest(".spine-branch");
+      if (!branch) return;
+      if (link.classList.contains("has-kids")) {
+        const open = branch.classList.toggle("is-open");
+        link.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      clearLeafActive();
+      link.classList.add("is-active");
+      branch.classList.add("is-active");
+      return;
+    }
+
+    const leaf = e.target.closest(".spine-leaf");
+    if (leaf) {
+      clearLeafActive();
+      leaf.classList.add("is-active");
+      leaf.closest(".spine-branch")?.classList.add("is-active");
+      leaf.closest(".spine-branch")?.querySelector(".spine-link")?.classList.add("is-active");
+    }
+  });
 }
 
 function wireTopbarSearch() {
