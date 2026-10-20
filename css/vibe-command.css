@@ -634,6 +634,7 @@
 
 .topbar {
   position: relative;
+  z-index: 50;
   background: linear-gradient(160deg, #25305a 0%, #2f6cbf 100%);
   color: #fff;
   box-shadow: none;
@@ -1543,6 +1544,7 @@ body[data-vibe="command"] .launcher {
 /* ——— Notifications popup ——— */
 .notif-wrap {
   position: relative;
+  z-index: 60;
 }
 
 .notif-panel {
@@ -1555,7 +1557,7 @@ body[data-vibe="command"] .launcher {
   box-shadow:
     0 12px 28px rgba(15, 20, 40, 0.18),
     0 2px 6px rgba(15, 20, 40, 0.08);
-  z-index: 40;
+  z-index: 60;
   overflow: hidden;
 }
 
