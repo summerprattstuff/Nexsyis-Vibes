@@ -11,6 +11,15 @@ const ICO = {
   parts: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>`,
   cal: `<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,
   invoice: `<svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h4"/></svg>`,
+  upload: `<svg viewBox="0 0 24 24"><path d="M12 16V5M8 9l4-4 4 4"/><path d="M4 19h16"/></svg>`,
+  search: `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`,
+  close: `<svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg>`,
+  home: `<svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>`,
+  popout: `<svg viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/><path d="M14 4h6v6M20 4l-9 9"/></svg>`,
+  filter: `<svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>`,
+  columns: `<svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="16" rx="1"/><rect x="14" y="4" width="6" height="16" rx="1"/></svg>`,
+  layers: `<svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></svg>`,
+  check: `<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>`,
 };
 
 const LABELS = {
@@ -31,29 +40,52 @@ function gauge(pct) {
   </svg>`;
 }
 
+const LEDGER_COLS = `
+  <colgroup>
+    <col class="col-check" />
+    <col class="col-ro" />
+    <col class="col-vehicle" />
+    <col class="col-customer" />
+    <col class="col-assigned" />
+    <col class="col-promised" />
+    <col class="col-total" />
+    <col class="col-status" />
+  </colgroup>`;
+
 const LEDGER_HEAD = `
   <thead>
     <tr>
-      <th style="width:36px"></th>
-      <th style="width:88px">RO #</th>
+      <th></th>
+      <th>RO #</th>
       <th>Vehicle</th>
       <th>Customer</th>
-      <th style="width:110px">Assigned</th>
-      <th style="width:96px">Promised</th>
-      <th class="num" style="width:100px">Total</th>
-      <th style="width:92px">Status</th>
+      <th>Assigned</th>
+      <th>Promised</th>
+      <th class="num">Total</th>
+      <th>Status</th>
+    </tr>
+    <tr class="filter-row" hidden>
+      <th></th>
+      <th><input class="filter-field" placeholder="ro" /></th>
+      <th><input class="filter-field" placeholder="vehicle" /></th>
+      <th><input class="filter-field" placeholder="customer" /></th>
+      <th><input class="filter-field" placeholder="assigned" /></th>
+      <th><input class="filter-field" placeholder="promised" /></th>
+      <th><input class="filter-field" placeholder="total" /></th>
+      <th></th>
     </tr>
   </thead>`;
 
 function stagePanel(key, title, count, rowsHtml) {
   return `
     <div class="panel ticks stage-panel stage-${key}">
+      <div class="stage-head">
+        <span class="tick"></span>${title} · ${count}
+      </div>
       <table class="ledger">
+        ${LEDGER_COLS}
         ${LEDGER_HEAD}
         <tbody>
-          <tr class="group group-${key}">
-            <td colspan="8"><span class="tick"></span>${title} · ${count}</td>
-          </tr>
           ${rowsHtml}
         </tbody>
       </table>
@@ -143,21 +175,104 @@ function mountFolders(vibe) {
       <header class="topbar">
         <div class="crumb">Office / <strong>Folders</strong></div>
         <div class="topbar-spacer"></div>
-        <div class="search" title="Search placeholder">
-          <input placeholder="Search screens…" readonly />
-          <button class="btn btn-primary" type="button" style="border-radius:0;height:100%">Go</button>
+        <div class="topbar-actions">
+          <button class="icon-btn search-toggle" type="button" aria-label="Search" aria-expanded="false">
+            <span class="ico" style="width:16px;height:16px">${ICO.search}</span>
+          </button>
+          <div class="notif-wrap">
+            <button class="icon-btn notif-toggle" type="button" aria-label="Notifications" aria-expanded="false">
+              <span class="ico" style="width:16px;height:16px">${ICO.bell}</span>
+              <span class="badge">3</span>
+            </button>
+            <div class="notif-panel" hidden>
+              <div class="notif-tabs">
+                <button class="notif-tab is-all is-on" type="button">All <b>4</b></button>
+                <button class="notif-tab is-task" type="button">Task <b>2</b></button>
+                <button class="notif-tab is-team" type="button">Team <b>1</b></button>
+                <button class="notif-tab is-cust" type="button">Customer <b>1</b></button>
+              </div>
+              <ul class="notif-list">
+                <li class="notif-item" data-cat="task">
+                  <span class="notif-dot is-task"></span>
+                  <div class="notif-body">
+                    <div class="notif-top">
+                      <strong>QC hold on RO 24802</strong>
+                      <time>9:12a</time>
+                    </div>
+                    <span>Blend panel flagged by T. Cole — needs your sign-off.</span>
+                  </div>
+                </li>
+                <li class="notif-item" data-cat="team">
+                  <span class="notif-dot is-team"></span>
+                  <div class="notif-body">
+                    <div class="notif-top">
+                      <strong>Parts meeting moved</strong>
+                      <time>Yest</time>
+                    </div>
+                    <span>Now 3:30p in the front office.</span>
+                  </div>
+                </li>
+                <li class="notif-item" data-cat="cust">
+                  <span class="notif-dot is-cust"></span>
+                  <div class="notif-body">
+                    <div class="notif-top">
+                      <strong>Marcus Webb replied</strong>
+                      <time>Yest</time>
+                    </div>
+                    <span>“Can I pick up Friday instead?”</span>
+                  </div>
+                </li>
+                <li class="notif-item" data-cat="task">
+                  <span class="notif-dot is-task"></span>
+                  <div class="notif-body">
+                    <div class="notif-top">
+                      <strong>A/P batch ready</strong>
+                      <time>Mon</time>
+                    </div>
+                    <span>12 invoices staged for approval.</span>
+                  </div>
+                </li>
+              </ul>
+              <button class="notif-foot" type="button">Mark all read / completed</button>
+            </div>
+          </div>
+          <button class="btn btn-upload" type="button">
+            <span class="ico" style="width:14px;height:14px">${ICO.upload}</span>
+            Upload Image
+          </button>
+          <button class="btn ${vibe === "command" ? "btn-teal" : "btn-primary"}" type="button">New estimate</button>
+
+          <div class="topbar-search-panel" hidden>
+            <div class="search search-screens" title="Search screens">
+              <input placeholder="screen, report, setup…" />
+              <button class="btn btn-primary" type="button">Search</button>
+            </div>
+            <div class="search search-folder" title="Go to folder">
+              <input placeholder="Go to Folder #" />
+              <button class="btn btn-primary" type="button">Go</button>
+            </div>
+            <button class="icon-btn search-close" type="button" aria-label="Close search">
+              <span class="ico" style="width:16px;height:16px">${ICO.close}</span>
+            </button>
+          </div>
         </div>
-        <button class="icon-btn" type="button" aria-label="Notifications">
-          <span class="ico" style="width:16px;height:16px">${ICO.bell}</span>
-          <span class="badge">3</span>
-        </button>
-        <button class="btn ${vibe === "command" ? "btn-teal" : "btn-primary"}" type="button">New estimate</button>
       </header>
 
       <div class="tabstrip" role="tablist">
-        <button class="tab" type="button">Home</button>
-        <button class="tab is-active" type="button">Folders <span class="x">×</span></button>
-        <button class="tab is-dirty" type="button"><span class="dot"></span> Estimate 24817 <span class="x">×</span></button>
+        <button class="tab" type="button">
+          <span class="ico tab-ico">${ICO.home}</span>
+          Home
+        </button>
+        <button class="tab is-active" type="button">
+          Folders
+          <span class="ico tab-ico tab-action" title="Open in new window">${ICO.popout}</span>
+          <span class="ico tab-ico tab-action x" title="Close">${ICO.close}</span>
+        </button>
+        <button class="tab is-dirty" type="button">
+          <span class="dot"></span>
+          Estimate 24817
+          <span class="ico tab-ico tab-action x" title="Close">${ICO.close}</span>
+        </button>
         <button class="close-all" type="button">Close all</button>
       </div>
 
@@ -168,6 +283,14 @@ function mountFolders(vibe) {
             <h1 class="page-title">Folders</h1>
           </div>
           ${kpis}
+        </div>
+
+        <div class="sel-bar">
+          <strong>01 folder · $6,412.80</strong>
+          <span class="sel-bar-spacer"></span>
+          <button class="btn btn-sm btn-sel-open" type="button">Open</button>
+          <button class="btn btn-sm btn-sel-soft" type="button">Assign</button>
+          <button class="btn btn-sm btn-sel-soft" type="button">Clear</button>
         </div>
 
         <div class="launcher" aria-label="Quick actions">
@@ -193,30 +316,39 @@ function mountFolders(vibe) {
           </button>
         </div>
 
-        <div class="sel-bar">
-          <strong>01 folder · $6,412.80</strong>
-          <span class="hint">Open · assign · range-select</span>
-          <button class="btn btn-sm" type="button">Open</button>
-          <button class="btn btn-sm" type="button">Assign</button>
-          <button class="btn btn-sm" type="button">Clear</button>
-        </div>
-
         <div class="toolbar">
           <span class="count">7 folders</span>
-          <div class="search" style="min-width:160px;height:28px">
-            <input placeholder="RO #, customer…" readonly />
-          </div>
-          <div class="seg">
-            <button class="chip is-on" type="button">All open</button>
-            <button class="chip" type="button">My desk</button>
-            <span class="ph ph-line short" style="width:56px;height:26px;border-radius:999px"></span>
+          <div class="search toolbar-search">
+            <input placeholder="RO #, customer…" />
+            <button class="btn btn-primary" type="button">Search</button>
           </div>
           <div class="topbar-spacer"></div>
-          <button class="btn btn-sm btn-ghost" type="button">Filter</button>
-          <button class="btn btn-sm btn-ghost" type="button">Columns</button>
+          <button class="btn btn-sm btn-neo stages-toggle is-active" type="button" aria-pressed="true">
+            <span class="ico">${ICO.layers}</span>
+            <span class="stages-toggle-label">Group</span>
+          </button>
+          <button class="btn btn-sm btn-neo filter-toggle" type="button" aria-pressed="false">
+            <span class="ico">${ICO.filter}</span>
+            Filter
+          </button>
+          <div class="columns-wrap">
+            <button class="btn btn-sm btn-neo columns-toggle" type="button" aria-expanded="false">
+              <span class="ico">${ICO.columns}</span>
+              Columns
+            </button>
+            <div class="columns-panel" hidden>
+              <div class="columns-head">Columns</div>
+              <label class="columns-row is-locked"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> RO number</label>
+              <label class="columns-row"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> Vehicle</label>
+              <label class="columns-row"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> Customer</label>
+              <label class="columns-row"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> Assigned</label>
+              <label class="columns-row"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> Promised</label>
+              <label class="columns-row"><span class="columns-check is-on"><span class="ico">${ICO.check}</span></span> Total</label>
+            </div>
+          </div>
         </div>
 
-        <div class="stage-stack">
+        <div class="stage-stack stages-collapsed">
           ${stagePanel("process", "In process", "03", `
               <tr class="data is-selected">
                 <td><span class="check"></span></td>
@@ -241,12 +373,12 @@ function mountFolders(vibe) {
               <tr class="data">
                 <td><span class="check"></span></td>
                 <td><a class="ro" href="#">24795</a></td>
-                <td><span class="ph ph-line"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td class="num"><span class="ph ph-line short" style="margin-left:auto"></span></td>
-                <td><span class="ph ph-line short"></span></td>
+                <td>2019 Ford F-150 XLT</td>
+                <td>Amina Ortiz</td>
+                <td>R. Alvarez</td>
+                <td>Aug 20</td>
+                <td class="num">$4,190.00</td>
+                <td><span class="tag tag-neutral">Floor</span></td>
               </tr>`)}
           ${stagePanel("awaiting", "Awaiting parts", "03", `
               <tr class="data">
@@ -262,11 +394,21 @@ function mountFolders(vibe) {
               <tr class="data">
                 <td><span class="check"></span></td>
                 <td><a class="ro" href="#">24788</a></td>
-                <td><span class="ph ph-line"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td><span class="ph ph-line short"></span></td>
-                <td class="num"><span class="ph ph-line short" style="margin-left:auto"></span></td>
+                <td>2017 Subaru Outback</td>
+                <td>Elena Park</td>
+                <td>T. Cole</td>
+                <td>Aug 21</td>
+                <td class="num">$1,842.60</td>
+                <td><span class="tag tag-attention">Parts</span></td>
+              </tr>
+              <tr class="data">
+                <td><span class="check"></span></td>
+                <td><a class="ro" href="#">24781</a></td>
+                <td>2023 Kia Telluride</td>
+                <td>Noah Briggs</td>
+                <td>M. Suh</td>
+                <td>Aug 24</td>
+                <td class="num">$5,020.15</td>
                 <td><span class="tag tag-attention">Parts</span></td>
               </tr>`)}
           ${stagePanel("ready", "Ready", "02", `
@@ -281,9 +423,14 @@ function mountFolders(vibe) {
                 <td><span class="tag tag-neutral">Ready</span></td>
               </tr>
               <tr class="data">
-                <td colspan="8" style="padding:12px">
-                  <span class="ph ph-block" style="height:40px"></span>
-                </td>
+                <td><span class="check"></span></td>
+                <td><a class="ro" href="#">24760</a></td>
+                <td>2016 Honda Accord Sport</td>
+                <td>Sam Delgado</td>
+                <td>R. Alvarez</td>
+                <td>Aug 14</td>
+                <td class="num">$980.40</td>
+                <td><span class="tag tag-neutral">Ready</span></td>
               </tr>`)}
         </div>
       </main>
@@ -292,10 +439,160 @@ function mountFolders(vibe) {
   </div>
 
   <div class="toast" role="status">Folder 24817 assigned · R. Alvarez</div>
-  <div class="vibe-tag">${label} <a href="index.html">All vibes</a></div>
   `;
 
   document.title = `Nexsyis · ${label} · Folders`;
+  wireTopbarSearch();
+  wireAllOpenToggle();
+  wirePopovers();
+}
+
+function wireTopbarSearch() {
+  const actions = document.querySelector(".topbar-actions");
+  if (!actions) return;
+  const panel = actions.querySelector(".topbar-search-panel");
+  const toggle = actions.querySelector(".search-toggle");
+  const closeBtn = actions.querySelector(".search-close");
+  const firstInput = panel?.querySelector("input");
+  let closing = false;
+
+  const open = () => {
+    if (closing) return;
+    panel.hidden = false;
+    panel.classList.remove("is-leaving");
+    panel.classList.add("is-entering");
+    actions.classList.add("is-searching");
+    toggle.setAttribute("aria-expanded", "true");
+    firstInput?.focus();
+    window.setTimeout(() => panel.classList.remove("is-entering"), 220);
+  };
+
+  const close = () => {
+    if (closing || !actions.classList.contains("is-searching")) return;
+    closing = true;
+    panel.classList.remove("is-entering");
+    panel.classList.add("is-leaving");
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      actions.classList.remove("is-searching");
+      panel.classList.remove("is-leaving");
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.focus();
+      closing = false;
+      panel.removeEventListener("animationend", finish);
+    };
+    panel.addEventListener("animationend", finish);
+    window.setTimeout(finish, 240);
+  };
+
+  toggle?.addEventListener("click", open);
+  closeBtn?.addEventListener("click", close);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && actions.classList.contains("is-searching")) close();
+  });
+}
+
+function wireAllOpenToggle() {
+  const btn = document.querySelector(".stages-toggle");
+  const stack = document.querySelector(".stage-stack");
+  if (!btn || !stack) return;
+  const label = btn.querySelector(".stages-toggle-label");
+
+  btn.addEventListener("click", () => {
+    const collapsed = stack.classList.toggle("stages-collapsed");
+    btn.classList.toggle("is-active", collapsed);
+    btn.setAttribute("aria-pressed", collapsed ? "true" : "false");
+    if (label) label.textContent = collapsed ? "Group" : "Ungroup";
+  });
+}
+
+function wirePopovers() {
+  const notifBtn = document.querySelector(".notif-toggle");
+  const notifPanel = document.querySelector(".notif-panel");
+  const filterBtn = document.querySelector(".filter-toggle");
+  const filterRows = document.querySelectorAll(".filter-row");
+  const columnsBtn = document.querySelector(".columns-toggle");
+  const columnsPanel = document.querySelector(".columns-panel");
+
+  const closeAll = (except) => {
+    if (except !== "notif" && notifPanel) {
+      notifPanel.hidden = true;
+      notifBtn?.setAttribute("aria-expanded", "false");
+      notifBtn?.classList.remove("is-active");
+    }
+    if (except !== "columns" && columnsPanel) {
+      columnsPanel.hidden = true;
+      columnsBtn?.setAttribute("aria-expanded", "false");
+      columnsBtn?.classList.remove("is-active");
+    }
+  };
+
+  notifBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = notifPanel.hidden;
+    closeAll("notif");
+    notifPanel.hidden = !open;
+    notifBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    notifBtn.classList.toggle("is-active", open);
+  });
+
+  filterBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeAll();
+    const open = filterBtn.getAttribute("aria-pressed") !== "true";
+    filterRows.forEach((row) => {
+      row.hidden = !open;
+    });
+    filterBtn.setAttribute("aria-pressed", open ? "true" : "false");
+    filterBtn.classList.toggle("is-active", open);
+  });
+
+  columnsBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = columnsPanel.hidden;
+    closeAll("columns");
+    columnsPanel.hidden = !open;
+    columnsBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    columnsBtn.classList.toggle("is-active", open);
+  });
+
+  document.querySelectorAll(".columns-row:not(.is-locked)").forEach((row) => {
+    row.addEventListener("click", (e) => {
+      e.preventDefault();
+      row.querySelector(".columns-check")?.classList.toggle("is-on");
+    });
+  });
+
+  const notifItems = document.querySelectorAll(".notif-item");
+  const filterNotifs = (cat) => {
+    notifItems.forEach((item) => {
+      const show = cat === "all" || item.dataset.cat === cat;
+      item.hidden = !show;
+      item.classList.toggle("is-hidden", !show);
+    });
+  };
+
+  document.querySelectorAll(".notif-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".notif-tab").forEach((t) => t.classList.remove("is-on"));
+      tab.classList.add("is-on");
+      const cat = tab.classList.contains("is-task")
+        ? "task"
+        : tab.classList.contains("is-team")
+          ? "team"
+          : tab.classList.contains("is-cust")
+            ? "cust"
+            : "all";
+      filterNotifs(cat);
+    });
+  });
+
+  document.addEventListener("click", () => closeAll());
+  notifPanel?.addEventListener("click", (e) => e.stopPropagation());
+  columnsPanel?.addEventListener("click", (e) => e.stopPropagation());
 }
 
 window.mountFolders = mountFolders;
