@@ -31,7 +31,6 @@ const SPINE_NAV = [
     id: "office",
     label: "Office",
     icon: "office",
-    expanded: true,
     active: true,
     children: [
       { label: "Folders", count: "24", active: true },
@@ -129,7 +128,6 @@ const SPINE_NAV = [
       {
         label: "Payroll & Time",
         count: "12",
-        open: true,
         children: [
           { label: "Employees" },
           { label: "Approve Time", count: "6" },
@@ -318,13 +316,13 @@ function mountFolders(vibe) {
 
   root.innerHTML = `
   <div class="app">
-    <aside class="spine is-open" aria-label="Sections">
+    <aside class="spine" aria-label="Sections">
       <div class="spine-head">
         <a class="brand" href="index.html" title="Nexsyis">
           <img src="assets/nexsyis-mark.ico" alt="" />
           <span class="brand-word">Nexsyis</span>
         </a>
-        <button class="spine-toggle" type="button" aria-expanded="true" aria-label="Collapse navigation" title="Collapse navigation">
+        <button class="spine-toggle" type="button" aria-expanded="false" aria-label="Expand navigation" title="Expand navigation">
           <span class="ico">${ICO.sidebar}</span>
         </button>
       </div>
