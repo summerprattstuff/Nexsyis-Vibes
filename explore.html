@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexsyis · Design Exploration</title>
+  <link rel="icon" href="assets/nexsyis-mark.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Manrope:wght@600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #25305a;
+      --lavender: #c2c9e6;
+      --blue: #6779c0;
+      --teal: #3fb8af;
+      --orange: #e8743b;
+      --gold: #e0a526;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--navy);
+      background: #f7f8fc;
+      padding: 48px 28px 64px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.02em;
+    }
+    .lede {
+      margin: 0 0 28px;
+      max-width: 58ch;
+      color: #5f6a88;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    a.card {
+      display: flex;
+      flex-direction: column;
+      min-height: 340px;
+      text-decoration: none;
+      color: inherit;
+      background: #fff;
+      border: 1px solid var(--lavender);
+      overflow: hidden;
+    }
+    a.card:hover { border-color: var(--navy); }
+    .swatch {
+      height: 118px;
+      border-bottom: 1px solid var(--lavender);
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      padding: 14px;
+    }
+    .swatch b {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.9);
+      padding: 5px 8px;
+    }
+    .chip {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 1px solid rgba(37,48,90,.12);
+    }
+    .body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .body h2 { margin: 0 0 10px; font-size: 20px; }
+    .body p { margin: 0 0 8px; color: #5f6a88; font-size: 13px; line-height: 1.45; }
+    .body p.craft { margin-bottom: 16px; flex: 1; color: #7a8298; font-size: 12.5px; }
+    .body p strong { color: var(--navy); font-weight: 700; }
+    .meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .command .swatch {
+      background: linear-gradient(160deg, #25305a, #6779c0);
+      font-family: "Sora", sans-serif;
+    }
+    .command .swatch b { color: var(--navy); }
+    .drafting .swatch {
+      background:
+        radial-gradient(circle, #c2c9e6 0.8px, transparent 0.9px) 0 0 / 14px 14px,
+        #f7f8fc;
+      font-family: "IBM Plex Sans", sans-serif;
+    }
+    .quiet .swatch {
+      background: #fff;
+      font-family: "Manrope", sans-serif;
+    }
+    .quiet .swatch::after {
+      content: "";
+      position: absolute;
+      left: 14px; top: 36px;
+      width: 96px; height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--teal) 65%, var(--lavender) 65%);
+    }
+    .notes {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--lavender);
+      font-size: 13px;
+      color: #5f6a88;
+      line-height: 1.55;
+    }
+    .notes strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Nexsyis</p>
+    <h1>Design Exploration</h1>
+    <p class="lede">
+      Three potential directions for Nexsyis.
+    </p>
+    <div class="grid">
+      <a class="card command" href="index.html">
+        <div class="swatch">
+          <span class="chip" style="background:#3fb8af"></span>
+          <span class="chip" style="background:#e8743b"></span>
+          <span class="chip" style="background:#e0a526"></span>
+          <b>01 · Command Center</b>
+        </div>
+        <div class="body">
+          <h2>Command Center</h2>
+          <p class="why"><strong>Why:</strong> Make the shop feel like a modern ops console — fast status, clear actions, data up front.</p>
+          <p class="inspo"><strong>Inspired by:</strong> Vehicle infotainment / tech dashboards (instrument clusters, icon launchers).</p>
+          <p class="craft">Navy→blue gradients, inset shadows, teal actives, Inter, denser spacing, rounded panels.</p>
+          <span class="meta">Open Folders →</span>
+        </div>
+      </a>
+      <a class="card drafting" href="drafting.html">
+        <div class="swatch">
+          <span class="chip" style="background:#25305a"></span>
+          <span class="chip" style="background:#6779c0"></span>
+          <span class="chip" style="background:#e0a526"></span>
+          <b>02 · Drafting Table</b>
+        </div>
+        <div class="body">
+          <h2>Drafting Table</h2>
+          <p class="why"><strong>Why:</strong> Lean into brand words — grids, blueprints, plans — so the UI feels precise and trustworthy.</p>
+          <p class="inspo"><strong>Inspired by:</strong> Engineering drawings and light-mode blueprint sheets (not dark blueprint cliché).</p>
+          <p class="craft">Dot grid, hairline navy/lavender borders, square corners, corner ticks, IBM Plex.</p>
+          <span class="meta">Open Folders →</span>
+        </div>
+      </a>
+      <a class="card quiet" href="quiet.html">
+        <div class="swatch">
+          <span class="chip" style="background:#25305a"></span>
+          <span class="chip" style="background:#3fb8af"></span>
+          <span class="chip" style="background:#e8743b"></span>
+          <b>03 · Minimalist</b>
+        </div>
+        <div class="body">
+          <h2>Minimalist</h2>
+          <p class="why"><strong>Why:</strong> Reduce noise for all-day use — calm hierarchy, fewer competing chrome treatments.</p>
+          <p class="inspo"><strong>Inspired by:</strong> Quiet SaaS sidebars and airy productivity tools (icon rail, generous whitespace).</p>
+          <p class="craft">Whitespace, lavender rules, navy headers, zebra rows, hover-expand nav, Manrope.</p>
+          <span class="meta">Open Folders →</span>
+        </div>
+      </a>
+    </div>
+    <p class="notes">
+      <strong>On each page:</strong> brand · shell chrome · color · type · primary action · tabs · ledger · filter chips · status badges · toast + confirm.
+      Palette: #25305A · #94A1D3 · #6779C0 · #C2C9E6 · accents #3FB8AF / #E8743B / #E0A526.
+    </p>
+  </div>
+</body>
+</html>
