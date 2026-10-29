@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexsyis · Element Library</title>
+  <link rel="icon" href="assets/nexsyis-mark.ico" />
+  <link rel="stylesheet" href="css/shell.css" />
+  <link rel="stylesheet" href="css/vibe-command.css?v=lib-edge" />
+  <link rel="stylesheet" href="css/version-nav.css" />
+  <link rel="stylesheet" href="css/library.css?v=lib-edge" />
+</head>
+<body class="has-version-nav library-page" data-vibe="command">
+  <nav class="version-nav" aria-label="Review">
+    <a class="version-nav-brand" href="command.html">Nexsyis</a>
+    <div class="version-nav-links">
+      <a href="command.html">V2</a>
+      <a href="v1.html">V1</a>
+      <a href="library.html" aria-current="page">Element Library</a>
+    </div>
+  </nav>
+
+  <div id="library">
+    <aside class="library-index" aria-label="Elements">
+      <p>Atoms</p>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#actions">Actions</a>
+      <a href="#badges">Status badges</a>
+      <a href="#chips">Filter chips</a>
+      <p>Molecules</p>
+      <a href="#chrome">Shell chrome</a>
+      <a href="#search">Search</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#kpis">Stats</a>
+      <a href="#selection">Selection bar</a>
+      <a href="#actions-row">Quick actions</a>
+      <a href="#ledger">Ledger rows</a>
+      <a href="#feedback">Toast + confirm</a>
+    </aside>
+
+    <main class="library-main">
+      <h1>Element Library</h1>
+      <p class="lede">Sample pieces in the current styles. The words are placeholder copy, so the layout can be read on its own.</p>
+
+      <section class="library-block" id="color">
+        <h2>Color</h2>
+        <p class="why">Navy for text. Teal for the active accent. Rose and gold stay reserved for warnings.</p>
+        <div class="swatches">
+          <div class="swatch-card"><i style="background:#25305a"></i><b>Navy</b><span>#25305A</span></div>
+          <div class="swatch-card"><i style="background:#2fb3bf"></i><b>Teal</b><span>#2FB3BF</span></div>
+          <div class="swatch-card"><i style="background:#b8445f"></i><b>Rose</b><span>#B8445F</span></div>
+          <div class="swatch-card"><i style="background:#d6a319"></i><b>Gold</b><span>#D6A319</span></div>
+          <div class="swatch-card"><i style="background:#008a62"></i><b>Green</b><span>#008A62</span></div>
+          <div class="swatch-card"><i style="background:#fff"></i><b>Paper</b><span>#FFFFFF</span></div>
+          <div class="swatch-card"><i style="background:#d4e6f8"></i><b>Hairline</b><span>#D4E6F8</span></div>
+        </div>
+      </section>
+
+      <section class="library-block" id="type">
+        <h2>Type</h2>
+        <p class="why">Plus Jakarta Sans. Five sizes, from the page title down to uppercase labels.</p>
+        <div class="type-stack">
+          <div style="font-size:32px;font-weight:700;letter-spacing:-0.03em"><em>32</em>Lorem ipsum</div>
+          <div style="font-size:24px;font-weight:700"><em>24</em>00.0</div>
+          <div style="font-size:16px"><em>16</em>Lorem ipsum dolor sit amet</div>
+          <div style="font-size:13px;font-weight:600"><em>13</em>Consectetur adipiscing</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase"><em>10</em>Lorem / Ipsum</div>
+        </div>
+      </section>
+
+      <section class="library-block" id="actions">
+        <h2>Actions</h2>
+        <p class="why">Button sizes and weights. Sit is resting. Amet is pressed.</p>
+        <div class="specimen-row">
+          <button class="btn btn-teal" type="button">Lorem</button>
+          <button class="btn btn-upload" type="button">
+            <span class="ico" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><path d="M12 16V5M8 9l4-4 4 4"/><path d="M4 19h16"/></svg></span>
+            Ipsum
+          </button>
+          <button class="btn btn-primary" type="button" style="background:#2fb3bf;border-color:#2fb3bf;color:#fff">Dolor</button>
+          <div class="toolbar">
+            <button class="btn btn-sm btn-neo" type="button">Sit</button>
+            <button class="btn btn-sm btn-neo is-active" type="button">Amet</button>
+          </div>
+          <button class="btn btn-ghost" type="button">Elit</button>
+        </div>
+      </section>
+
+      <section class="library-block" id="badges">
+        <h2>Status badges</h2>
+        <p class="why">Short labels in three tones.</p>
+        <div class="specimen-row">
+          <span class="tag tag-neutral">Lorem</span>
+          <span class="tag tag-neutral">Ipsum</span>
+          <span class="tag tag-attention">Dolor</span>
+          <span class="tag tag-critical">Sit</span>
+        </div>
+      </section>
+
+      <section class="library-block" id="chips">
+        <h2>Filter chips</h2>
+        <p class="why">One component. Off, and on.</p>
+        <div class="specimen-row">
+          <button class="chip" type="button">Lorem</button>
+          <button class="chip is-on" type="button">Ipsum</button>
+        </div>
+      </section>
+
+      <section class="library-block" id="chrome">
+        <h2>Shell chrome</h2>
+        <p class="why">Icon rail and icon button.</p>
+        <div class="specimen-row">
+          <aside class="spine spine-sample" aria-label="Collapsed nav">
+            <nav class="spine-nav">
+              <button class="spine-item is-active" type="button">
+                <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></span></span>
+              </button>
+              <button class="spine-item" type="button">
+                <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14v4M12 10v8M17 6v12"/></svg></span></span>
+              </button>
+            </nav>
+          </aside>
+          <aside class="spine is-open spine-open" aria-label="Open nav">
+            <nav class="spine-nav">
+              <button class="spine-item is-active" type="button">
+                <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></span></span>
+                <span class="lbl" style="opacity:1;max-width:140px">Lorem</span>
+              </button>
+            </nav>
+          </aside>
+          <button class="icon-btn" type="button" aria-label="Lorem">
+            <span class="ico" style="width:16px;height:16px"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span>
+          </button>
+          <div class="user-chip" title="Label">AB</div>
+        </div>
+      </section>
+
+      <section class="library-block" id="search">
+        <h2>Search</h2>
+        <p class="why">Field and button.</p>
+        <div class="topbar" style="margin-bottom:12px">
+          <div class="search">
+            <input placeholder="Lorem ipsum…" />
+            <button class="btn btn-primary" type="button">Lorem</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <div class="search toolbar-search">
+            <input placeholder="Dolor sit amet…" />
+            <button class="btn btn-primary" type="button">Ipsum</button>
+          </div>
+          <div class="search toolbar-search">
+            <input placeholder="Consectetur…" />
+            <button class="btn btn-primary" type="button">Sit</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="library-block" id="tabs">
+        <h2>Tabs</h2>
+        <p class="why">Default, active, and marked.</p>
+        <div class="tabstrip" role="tablist">
+          <button class="tab" type="button">
+            <span class="ico tab-ico"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg></span>
+            Lorem
+          </button>
+          <button class="tab is-active" type="button">Ipsum</button>
+          <button class="tab is-dirty" type="button">
+            <span class="dot"></span>
+            Dolor sit
+          </button>
+        </div>
+      </section>
+
+      <section class="library-block" id="kpis">
+        <h2>Stats</h2>
+        <p class="why">White cards. Teal rings, and one red ring.</p>
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kpi-gauge">
+              <svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="16"/><circle class="arc" cx="22" cy="22" r="16" stroke-dasharray="72.4 100.5" transform="rotate(-90 22 22)"/></svg>
+              <div><span class="k">Lorem</span><span class="v">00.0</span></div>
+            </div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-gauge">
+              <svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="16"/><circle class="arc" cx="22" cy="22" r="16" stroke-dasharray="54.3 100.5" transform="rotate(-90 22 22)"/></svg>
+              <div><span class="k">Ipsum</span><span class="v">0.0</span></div>
+            </div>
+          </div>
+          <div class="kpi is-alert">
+            <div class="kpi-gauge">
+              <svg viewBox="0 0 44 44" aria-hidden="true"><circle class="track" cx="22" cy="22" r="16"/><circle class="arc" cx="22" cy="22" r="16" stroke-dasharray="18.1 100.5" transform="rotate(-90 22 22)"/></svg>
+              <div><span class="k">Dolor</span><span class="v">00</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="library-block" id="selection">
+        <h2>Selection bar</h2>
+        <p class="why">A bar with a label and actions.</p>
+        <div class="sel-bar">
+          <strong>00 lorem · 00.00</strong>
+          <span class="sel-bar-spacer"></span>
+          <button class="btn btn-sm btn-sel-open" type="button">Lorem</button>
+          <button class="btn btn-sm btn-sel-soft" type="button">Ipsum</button>
+          <button class="btn btn-sm btn-sel-soft" type="button">Dolor</button>
+        </div>
+      </section>
+
+      <section class="library-block" id="actions-row">
+        <h2>Quick actions</h2>
+        <p class="why">Four shortcut tiles.</p>
+        <div class="launcher">
+          <button class="launch-tile" type="button">
+            <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></span>
+            <span class="name">Lorem</span>
+          </button>
+          <button class="launch-tile" type="button">
+            <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span></span>
+            <span class="name">Ipsum</span>
+          </button>
+          <button class="launch-tile" type="button">
+            <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span></span>
+            <span class="name">Dolor</span>
+          </button>
+          <button class="launch-tile" type="button">
+            <span class="tile"><span class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h4"/></svg></span></span>
+            <span class="name">Sit</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="library-block" id="ledger">
+        <h2>Ledger rows</h2>
+        <p class="why">Rest, hover, and selected rows.</p>
+        <div class="stage-panel">
+          <div class="stage-head stage-process"><span class="tick"></span>Lorem ipsum · 00</div>
+          <table class="ledger">
+            <colgroup>
+              <col class="col-check" />
+              <col class="col-ro" />
+              <col class="col-vehicle" />
+              <col class="col-customer" />
+              <col class="col-assigned" />
+              <col class="col-total" />
+              <col class="col-status" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th></th><th>Lorem</th><th>Ipsum</th><th>Dolor</th><th>Sit</th><th class="num">Amet</th><th>Elit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="data">
+                <td><span class="check"></span></td>
+                <td><a class="ro" href="#">00000</a></td>
+                <td>Lorem ipsum dolor</td>
+                <td>Consectetur</td>
+                <td>A. Sit</td>
+                <td class="num">00.00</td>
+                <td><span class="tag tag-attention">Dolor</span></td>
+              </tr>
+              <tr class="data is-hover-demo">
+                <td><span class="check"></span></td>
+                <td><a class="ro" href="#">00000</a></td>
+                <td>Adipiscing elit sed</td>
+                <td>Eiusmod</td>
+                <td>B. Tempor</td>
+                <td class="num">00.00</td>
+                <td><span class="tag tag-neutral">Lorem</span></td>
+              </tr>
+              <tr class="data is-selected">
+                <td><span class="check"></span></td>
+                <td><a class="ro" href="#">00000</a></td>
+                <td>Incididunt ut labore</td>
+                <td>Magna</td>
+                <td>C. Aliqua</td>
+                <td class="num">00.00</td>
+                <td><span class="tag tag-neutral">Ipsum</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="library-block" id="feedback">
+        <h2>Toast + confirm</h2>
+        <p class="why">A note and a confirm card.</p>
+        <div class="specimen-row" style="align-items:flex-start">
+          <div class="toast" role="status">Lorem ipsum dolor sit amet</div>
+          <div class="dialog-wrap">
+            <div class="dialog">
+              <div class="kicker"><span class="dot"></span>Lorem</div>
+              <h3>Lorem ipsum dolor?</h3>
+              <p>Consectetur adipiscing elit, sed do eiusmod tempor.</p>
+              <div class="actions">
+                <span class="grow"></span>
+                <button class="btn btn-ghost" type="button">Ipsum</button>
+                <button class="btn btn-primary" type="button" style="background:#2fb3bf;border-color:#2fb3bf;color:#fff">Dolor</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&display=swap");
+
+.version-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 48px;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid #d4e6f8;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 80;
+}
+
+.version-nav-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #25305a;
+  text-decoration: none;
+}
+
+.version-nav-links {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: 2px;
+}
+
+.version-nav-links a {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 3px solid transparent;
+  color: #5c6780;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.version-nav-links a:hover {
+  color: #25305a;
+}
+
+.version-nav-links a[aria-current="page"] {
+  color: #25305a;
+  border-bottom-color: #2fb3bf;
+}
+
+body.has-version-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+}
+
+body.has-version-nav #app {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body.has-version-nav #app > .app {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}

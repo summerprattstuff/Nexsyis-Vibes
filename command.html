@@ -6,11 +6,20 @@
   <title>Nexsyis · Command Center · Folders</title>
   <link rel="icon" href="assets/nexsyis-mark.ico" />
   <link rel="stylesheet" href="css/shell.css" />
-  <link rel="stylesheet" href="css/vibe-command.css" />
+  <link rel="stylesheet" href="css/vibe-command.css?v=lib-edge" />
+  <link rel="stylesheet" href="css/version-nav.css" />
 </head>
-<body>
+<body class="has-version-nav">
+  <nav class="version-nav" aria-label="Review">
+    <a class="version-nav-brand" href="command.html">Nexsyis</a>
+    <div class="version-nav-links">
+      <a href="command.html" aria-current="page">V2</a>
+      <a href="v1.html">V1</a>
+      <a href="library.html">Element Library</a>
+    </div>
+  </nav>
   <div id="app"></div>
-  <script src="js/folders.js"></script>
+  <script src="js/folders.js?v=spine-closed"></script>
   <script>mountFolders("command");</script>
 </body>
 </html>
